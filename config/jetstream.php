@@ -58,10 +58,15 @@ return [
     */
 
     'features' => [
+        // teampolicyの作成
         // Features::termsAndPrivacyPolicy(),
-        // Features::profilePhotos(),
+        // proflie画像
+        Features::profilePhotos(),
+        // api
         // Features::api(),
+        // 招待状
         // Features::teams(['invitations' => true]),
+        // アカウントの削除
         Features::accountDeletion(),
     ],
 
