@@ -132,15 +132,21 @@ return [
     */
 
     'features' => [
+        // user登録
         Features::registration(),
+        // password変更
         Features::resetPasswords(),
+        // mail認証
         // Features::emailVerification(),
+        // profileの変更
         Features::updateProfileInformation(),
+        // passwor変更
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-        ]),
+        // 2段階認証
+        // Features::twoFactorAuthentication([
+        //     'confirm' => true,
+        //     'confirmPassword' => true,
+        // ]),
     ],
 
 ];
