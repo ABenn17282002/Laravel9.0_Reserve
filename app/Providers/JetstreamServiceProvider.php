@@ -15,7 +15,8 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // JetStreamのルーティング情報を無効化(rout.phpで新たに設定)
+        // Fortify::ignoreRoutes();
     }
 
     /**
