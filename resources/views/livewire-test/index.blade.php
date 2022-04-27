@@ -5,6 +5,9 @@
     </head>
     <body>
         Live-WireTestです!
+        {{-- Live-wireのカウンター --}}
+        {{-- <livewire:counter /> --}}
+        @livewire('counter')
 
         @livewireScripts
     </body>
