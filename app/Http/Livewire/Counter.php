@@ -8,6 +8,12 @@ class Counter extends Component
 {
     public $count = 0;
 
+    public $name1="";
+
+    public $name2="";
+
+    public $name3="";
+
     public function increment()
     {
         $this->count++;
