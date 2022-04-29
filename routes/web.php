@@ -33,5 +33,6 @@ Route::middleware([
 Route::controller(LivewireTestController::class)
 ->prefix('livewire-test')->name('livewire-test.')->group(function(){
     Route::get('index', 'index')->name('index');
+    // 登録用ルート設定
     Route::get('register', 'register')->name('register');
 });
