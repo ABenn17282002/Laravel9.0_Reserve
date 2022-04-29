@@ -11,6 +11,9 @@
     (JSのchangeイベント) --}}
     <input wire:model.lazy="name2" type="text"><br>
     こんにちは {{ $name2 }} さん<br>
+    <button wire:mouseover="mouseOver">マウスを合わせてね</button><br>
+
+    <br>
 
     {{-- submitボタンなどを押したタイミングで通信--}}
     <input wire:model.defer="name3" type="text"><br>
