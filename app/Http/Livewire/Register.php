@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class Register extends Component
 {
+    public $register;
+
     // formの値を格納する変数
     public $name;
     public $email;
@@ -20,6 +22,12 @@ class Register extends Component
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8',
     ];
+
+    // リアルタイムバリデーション
+    public function updated($property)
+    {
+        $this->validateOnly($property);
+    }
 
     // 登録処理
     public function register()

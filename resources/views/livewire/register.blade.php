@@ -7,7 +7,8 @@
         @error('name')<div class="text-red-400">{{ $message }}</div> @enderror
 
         <label for="email">メールアドレス</label>
-        <input id="email" type="email" wire:model="email"><br>
+        {{-- 指定ms待って通信 1000ms = 1秒 --}}
+        <input id="email" type="email" wire:model.lazy="email"><br>
         @error('email')<div class="text-red-400">{{ $message }}</div> @enderror
 
         <label for="password">パスワード</label>
