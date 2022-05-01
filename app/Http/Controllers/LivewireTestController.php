@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 
 class LivewireTestController extends Controller
 {
+
+    // 登録用ページ
+    public function register()
+    {
+        return view('livewire-test.register');
+    }
+
     public function index()
     {
         // Live-wire用ページの表示
