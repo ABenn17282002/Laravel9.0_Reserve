@@ -4,6 +4,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+
     @livewireStyles
 
     <!-- Scripts -->
@@ -13,5 +14,6 @@
         Live-WireTestです! register
         @livewire('register')
         @livewireScripts
+
     </body>
 </html>
