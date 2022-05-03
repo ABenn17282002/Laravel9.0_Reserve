@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 // Livewire用コントローラ
 use App\Http\Controllers\LivewireTestController;
+// AlpineTest用コントローラ
+use App\Http\Controllers\AlpineTestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,14 @@ use App\Http\Controllers\LivewireTestController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+// alpine表示用ルートの設定
+Route::get('alpine-test/index',
+[AlpineTestController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
