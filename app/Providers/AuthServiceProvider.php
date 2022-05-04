@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any authentication / authorization services.
+     * 全認証／認可サービスの登録
      *
      * @return void
      */
@@ -25,6 +25,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // 管理者のみ許可
+        Gate::define('admin', function($user){
+            return $user->role === 1;
+        });
+
+        // manager以上のみ可
+        Gate::define('manager-higher', function($user){
+            return $user->role > 0 && $user->role <= 5;
+        });
+
+        // User以上可
+        Gate::define('user-higher', function($user){
+            return $user->role > 0 && $user->role <= 9;
+        });
     }
 }
