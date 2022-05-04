@@ -22,6 +22,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// manager以上の権限がアクセス可
+Route::prefix('manager')
+->middleware('can:manager-higher')->group(function(){
+    Route::get('index', function () {
+        dd('manager');
+    });
+});
+
+// user以上権限がアクセス可
+Route::middleware('can:user-higher')->group(function(){
+    Route::get('index', function () {
+        dd('user');
+    });
+});
+
 // alpine表示用ルートの設定
 Route::get('alpine-test/index',
 [AlpineTestController::class, 'index']);
