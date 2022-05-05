@@ -15,6 +15,18 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            // イベント名
+            $table->string('name');
+            // イベント内容
+            $table->text('information');
+            // 最大人数
+            $table->integer('max_people');
+            // 開始日時
+            $table->datetime('start_date');
+            // 終了日時
+            $table->datetime('end_date');
+            // 表示・非表示
+            $table->boolean('is_visible');
             $table->timestamps();
         });
     }
