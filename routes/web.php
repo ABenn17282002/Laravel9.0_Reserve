@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LivewireTestController;
 // AlpineTest用コントローラ
 use App\Http\Controllers\AlpineTestController;
+// EventContrller
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +27,8 @@ Route::get('/', function () {
 // manager以上の権限がアクセス可
 Route::prefix('manager')
 ->middleware('can:manager-higher')->group(function(){
-    Route::get('index', function () {
-        dd('manager');
-    });
+    // Event関連リソースの紐づけ
+    Route::resource('events',EventController::class);
 });
 
 // user以上権限がアクセス可
