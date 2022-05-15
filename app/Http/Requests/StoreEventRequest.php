@@ -13,7 +13,8 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        // falseの場合エラーになる
+        return true;
     }
 
     /**

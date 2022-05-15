@@ -34,7 +34,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('manager.events.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
