@@ -2923,10 +2923,6 @@ span.flatpickr-weekday {
     margin-top: 0px;
   }
 
-  .md\:mb-2 {
-    margin-bottom: 0.5rem;
-  }
-
   .md\:grid {
     display: grid;
   }
@@ -2955,10 +2951,6 @@ span.flatpickr-weekday {
 
   .lg\:col-span-4 {
     grid-column: span 4 / span 4;
-  }
-
-  .lg\:mb-0 {
-    margin-bottom: 0px;
   }
 
   .lg\:w-2\/3 {
