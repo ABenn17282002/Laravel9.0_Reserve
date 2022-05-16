@@ -11,11 +11,8 @@
                 {{-- イベント登録フォーム --}}
                 <div class="max-w-2xl py-4 mx-auto">
                     <x-jet-validation-errors class="mb-4" />
-                    @if (session('status'))
-                        <div class="mb-4 font-medium text-sm text-green-600">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    {{-- flassmessageの表示 --}}
+                    <x-flash-message/>
 
                     <form method="POST" action="{{ route('events.store') }}">
                         @csrf
@@ -43,8 +40,8 @@
                         </div>
                         <div class="md:flex justify-between items-end">
                             <div class="mt-4">
-                                <x-jet-label for="max-people" value="定員数" />
-                                <x-jet-input id="max-people" class="block mt-1 w-full" type="number" name="max-people" required />
+                                <x-jet-label for="max_people" value="定員数" />
+                                <x-jet-input id="max_people" class="block mt-1 w-full" type="number" name="max_people" required/>
                             </div>
                             <div class="flex space-x-4 justify-around">
                                 <input type="radio" name="is_visible" value="1" checked />表示

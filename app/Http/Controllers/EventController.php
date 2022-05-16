@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 // DBファザード
 use Illuminate\Support\Facades\DB;
+// 日付取得モジュール
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -45,7 +47,30 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        dd($request);
+        // dd($request);
+
+        // 開始時間=日時+開始時間→CarbonLibraryで日付にフォーマット
+        $start = $request['event_date'] . " " . $request['start_time'];
+        $startDate = Carbon::createFromFormat('Y-m-d H:i', $start);
+
+        // 終了時間=日時+終了時間→CarbonLibraryで日付にフォーマット
+        $end = $request['event_date'] . " " . $request['end_time'];
+        $endDate = Carbon::createFromFormat('Y-m-d H:i', $end);
+
+        // DB保存処理
+        Event::create([
+            'name' => $request['event_name'],
+            'information' => $request['information'],
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'max_people' => $request['max_people'],
+            'is_visible' => $request['is_visible']
+        ]);
+
+         // 登録完了のflash-message
+        session()->flash('status', '登録okです');
+        // event.indexへリダイレクト
+        return to_route('events.index');
     }
 
     /**
