@@ -9,6 +9,8 @@ use App\Models\Event;
 use Illuminate\Support\Facades\DB;
 // 日付取得モジュール
 use Carbon\Carbon;
+// EventServiceモジュール
+use App\Services\EventService;
 
 class EventController extends Controller
 {
@@ -47,22 +49,9 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        // dd($request);
-
-        /** <登録時間重複確認>
-         * 新規の開始時間  < 登録済みの終了時間
-         * and
-         * 新規の終了時間 > 登録済みの開始時間
-         * 例) 登録済み  A 10:00 - 12:00, B 13:00 - 15:00
-         * 新規 11:00-14:00 ＝> 11:00-12:00と13:00-14:00まで重複NG
-         */
-        $check = DB::table('events')
-        ->whereDate('start_date', $request['event_date'])  // 日時
-        ->whereTime('end_date' ,'>',$request['start_time'])
-        ->whereTime('start_date', '<', $request['end_time'])
-        ->exists(); // 存在確認
-
-        // dd($check);
+        // フォームから渡ってきた日付、開始時間、終了時間を渡す=>関数内で重複イベント確認
+        $check = EventService::checkEventDuplication(
+            $request['event_date'],$request['start_time'],$request['end_time']);
 
         // 重複の場合、アラートを出す
         if($check){
@@ -70,13 +59,10 @@ class EventController extends Controller
             return view('manager.events.create');
         }
 
-        // 開始時間=日時+開始時間→CarbonLibraryで日付にフォーマット
-        $start = $request['event_date'] . " " . $request['start_time'];
-        $startDate = Carbon::createFromFormat('Y-m-d H:i', $start);
-
-        // 終了時間=日時+終了時間→CarbonLibraryで日付にフォーマット
-        $end = $request['event_date'] . " " . $request['end_time'];
-        $endDate = Carbon::createFromFormat('Y-m-d H:i', $end);
+        // 開始時間(日付作成処理はEventService::joinDateAndTime内)
+        $startDate = EventService::joinDateAndTime($request['event_date'],$request['start_time']);
+        // 終了時間(日付作成処理はEventService::joinDateAndTime内)
+        $endDate = EventService::joinDateAndTime($request['event_date'],$request['end_time']);
 
         // DB保存処理
         Event::create([
