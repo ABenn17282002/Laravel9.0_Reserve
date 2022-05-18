@@ -49,6 +49,27 @@ class EventController extends Controller
     {
         // dd($request);
 
+        /** <登録時間重複確認>
+         * 新規の開始時間  < 登録済みの終了時間
+         * and
+         * 新規の終了時間 > 登録済みの開始時間
+         * 例) 登録済み  A 10:00 - 12:00, B 13:00 - 15:00
+         * 新規 11:00-14:00 ＝> 11:00-12:00と13:00-14:00まで重複NG
+         */
+        $check = DB::table('events')
+        ->whereDate('start_date', $request['event_date'])  // 日時
+        ->whereTime('end_date' ,'>',$request['start_time'])
+        ->whereTime('start_date', '<', $request['end_time'])
+        ->exists(); // 存在確認
+
+        // dd($check);
+
+        // 重複の場合、アラートを出す
+        if($check){
+            session()->flash('alert', 'この時間帯は既に他の予約が存在します。');
+            return view('manager.events.create');
+        }
+
         // 開始時間=日時+開始時間→CarbonLibraryで日付にフォーマット
         $start = $request['event_date'] . " " . $request['start_time'];
         $startDate = Carbon::createFromFormat('Y-m-d H:i', $start);

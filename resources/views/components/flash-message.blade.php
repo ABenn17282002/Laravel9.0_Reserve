@@ -17,7 +17,15 @@ $(function(){
             "closeButton" : true,
             "positionClass": "toast-top-center",
         }
-toastr.success("{{ Session::get('status') }}");
-@endif
+        toastr.success("{{ Session::get('status') }}");
+    @elseif (Session::has('alert'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "positionClass": "toast-top-center",
+
+        }
+        toastr.warning("{{ Session::get('alert') }}");
+    @endif
 });
 </script>
