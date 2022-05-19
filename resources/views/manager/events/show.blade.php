@@ -51,7 +51,7 @@
                                 <input type="radio" name="is_visible" value="0" />非表示
                             </div>
                             <x-jet-button class="ml-4">
-                                新規登録
+                                編集する
                             </x-jet-button>
                         </div>
                     </form>
