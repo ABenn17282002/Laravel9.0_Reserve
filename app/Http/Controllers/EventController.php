@@ -88,7 +88,11 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        // dd($event);
+        // イベントモデルを取得
+        $event = Event::findorFail($event->id);
+        // 取得したイベントモデルを詳細ページへ返す
+        return view('manager.events.show',\compact('event'));
     }
 
     /**

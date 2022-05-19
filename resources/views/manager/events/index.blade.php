@@ -30,7 +30,12 @@
                                     @foreach($events as $event)
                                     <tr>
                                         {{-- イベント名 --}}
-                                        <td class="px-4 py-3">{{ $event->name }}</td>
+                                        <td class="text-blue-500 px-4 py-3">
+                                        {{-- 編集画面へのリンク作成 --}}
+                                        <a href="{{ route('events.show',['event'=>$event->id])}}">
+                                            {{ $event->name }}
+                                        </a>
+                                        </td>
                                         {{-- 開始日時 --}}
                                         <td class="px-4 py-3">{{ $event->start_date }}</td>
                                         {{-- 終了日時 --}}
