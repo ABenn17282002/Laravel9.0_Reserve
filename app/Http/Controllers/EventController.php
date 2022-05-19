@@ -111,7 +111,18 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        // 処理内容は詳細ページ表示と同様
+        $event = Event::findorFail($event->id);
+
+
+        $eventDate = $event->eventDate;
+        $startTime = $event->startTime ;
+        $endTime = $event->endTime ;
+
+        // dd($event,$eventDate,$startTime,$endTime);
+
+        return view('manager.events.edit',
+        \compact('event','eventDate','startTime','endTime'));
     }
 
     /**
