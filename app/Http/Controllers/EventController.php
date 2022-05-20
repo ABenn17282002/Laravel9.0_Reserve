@@ -111,14 +111,13 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        // 処理内容は詳細ページ表示と同様
+        // イベントIDの取得
         $event = Event::findorFail($event->id);
 
-        $eventDate = $event->eventDate;
+        // 日付を元のY-m-d形式に戻したものを挿入する
+        $eventDate = $event->editEventDate;
         $startTime = $event->startTime ;
         $endTime = $event->endTime ;
-
-        // dd($event,$eventDate,$startTime,$endTime);
 
         return view('manager.events.edit',
         \compact('event','eventDate','startTime','endTime'));
@@ -133,14 +132,19 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        // フォームから渡ってきた日付、開始時間、終了時間を渡す=>関数内で重複イベント確認
-        $check = EventService::checkEventDuplication(
+        // 重複イベントをカウントする
+        $check = EventService::countEventDuplication(
             $request['event_date'],$request['start_time'],$request['end_time']);
 
         // 重複の場合、アラートを出す
-        if($check){
+        if($check > 1){
+            $event = Event::findorFail($event->id);
+            $eventDate = $event->editEventDate;
+            $startTime = $event->startTime ;
+            $endTime = $event->endTime ;
             session()->flash('alert', 'この時間帯は既に他の予約が存在します。');
-            return view('manager.events.edit');
+            return view('manager.events.edit',
+            \compact('event','eventDate','startTime','endTime'));
         }
 
         // 開始時間(日付作成処理はEventService::joinDateAndTime内)

@@ -26,6 +26,18 @@ class EventService
         ->exists(); // 存在確認
     }
 
+    /** 編集時の重複イベント確認
+     *  重複イベントが1の場合は問題なし、2件以上の場合はエラー
+     */
+    public static function countEventDuplication($eventDate, $startTime, $endTime)
+    {
+        return DB::table('events')
+        ->whereDate('start_date', $eventDate)
+        ->whereTime('end_date', '>', $startTime)
+        ->whereTime('start_date', '<', $endTime)
+        ->count();
+    }
+
     /** 開始及び終了時間作成関数
     *   日時+開始及び終了時間⇒Carbonモジュールで日付変換
     */

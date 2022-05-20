@@ -30,6 +30,12 @@ class Event extends Model
         return new Attribute(get:fn()=>Carbon::parse($this->start_date)->format('Y年m月d日'));
     }
 
+    // 編集時に加工した日付をDB保存形式に戻す
+    protected function editEventDate():Attribute
+    {
+        return new Attribute(get:fn()=>Carbon::parse($this->start_date)->format('Y-m-d'));
+    }
+
     // 取得した開始日時から開始時間のみを取得
     protected function startTime():Attribute
     {
