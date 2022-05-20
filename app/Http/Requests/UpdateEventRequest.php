@@ -13,7 +13,7 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,17 @@ class UpdateEventRequest extends FormRequest
      */
     public function rules()
     {
+        // 内容はStoreEventRequestと同一
         return [
-            //
+            'event_name' => ['required', 'max:50'],
+            'information' => ['required', 'max:200'],
+            'event_date' => ['required', 'date'],
+            'start_time' => ['required'],
+            // 終了時刻はstart_timeの後でないとError
+            'end_time' => ['required', 'after:start_time'],
+            // 定員数は数値 and 1～20人の間
+            'max_people' => ['required', 'numeric', 'between:1,20'],
+            'is_visible' => ['required', 'boolean']
         ];
     }
 }

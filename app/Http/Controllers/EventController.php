@@ -114,7 +114,6 @@ class EventController extends Controller
         // 処理内容は詳細ページ表示と同様
         $event = Event::findorFail($event->id);
 
-
         $eventDate = $event->eventDate;
         $startTime = $event->startTime ;
         $endTime = $event->endTime ;
@@ -134,7 +133,37 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        // フォームから渡ってきた日付、開始時間、終了時間を渡す=>関数内で重複イベント確認
+        $check = EventService::checkEventDuplication(
+            $request['event_date'],$request['start_time'],$request['end_time']);
+
+        // 重複の場合、アラートを出す
+        if($check){
+            session()->flash('alert', 'この時間帯は既に他の予約が存在します。');
+            return view('manager.events.edit');
+        }
+
+        // 開始時間(日付作成処理はEventService::joinDateAndTime内)
+        $startDate = EventService::joinDateAndTime($request['event_date'],$request['start_time']);
+        // 終了時間(日付作成処理はEventService::joinDateAndTime内)
+        $endDate = EventService::joinDateAndTime($request['event_date'],$request['end_time']);
+
+        // イベントIDを取得
+        $event = Event::findorFail($event->id);
+        // 取得したイベントIDから情報を取得
+        $event->name = $request['event_name'];
+        $event->information = $request['information'];
+        $event->start_date = $startDate;
+        $event->end_date = $endDate;
+        $event->max_people = $request['max_people'];
+        $event->is_visible = $request['is_visible'];
+        // 編集したイベント情報を保存
+        $event->save();
+
+         // 登録完了のflash-message
+        session()->flash('status', '更新完了しました');
+        // event.indexへリダイレクト
+        return to_route('events.index');
     }
 
     /**
