@@ -26,6 +26,37 @@ class EventService
         ->exists(); // 存在確認
     }
 
+    /** 編集時の重複イベント確認
+    * 1. 日付の重複が無いなら重複していない。
+    * 2. 日付の重複が自身なら重複していない。
+    * 3. 日付の重複が他のイベントなら重複している。
+    */
+    public static function checkEventDuplicationExceptOwn($ownEventId, $eventDate,
+    $startTime, $endTime)
+    {
+        $event = DB::table('events')
+		->whereDate('start_date', $eventDate)
+		->whereTime('end_date', '>', $startTime)
+		->whereTime('start_date', '<', $endTime)
+		->get()       //データの取得
+		->toArray(); // 配列化
+
+        // そもそも日付が重複していない
+        if (empty($event)) {
+            return false;
+        }
+
+        // 重複があったイベントのidを取得
+        $eventId = $event[0]->id;
+
+        // 重複していたイベントが自身の場合、重なっていないと判定
+        if ($ownEventId === $eventId) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /** 開始及び終了時間作成関数
     *   日時+開始及び終了時間⇒Carbonモジュールで日付変換
     */

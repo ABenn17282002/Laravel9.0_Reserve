@@ -111,15 +111,13 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        // 処理内容は詳細ページ表示と同様
+        // イベントIDの取得
         $event = Event::findorFail($event->id);
 
-
-        $eventDate = $event->eventDate;
+        // 日付を元のY-m-d形式に戻したものを挿入する
+        $eventDate = $event->editEventDate;
         $startTime = $event->startTime ;
         $endTime = $event->endTime ;
-
-        // dd($event,$eventDate,$startTime,$endTime);
 
         return view('manager.events.edit',
         \compact('event','eventDate','startTime','endTime'));
@@ -134,7 +132,53 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        // 重複イベントをカウントする
+        $check = EventService::checkEventDuplicationExceptOwn(
+            // イベント自身のIDも渡す
+            $event->id,
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
+        );
+
+        // dd($check);
+
+        // 重複の場合、アラートを出す
+        if($check){
+            $event = Event::findorFail($event->id);
+
+            // Accessor
+            $eventDate = $event->editEventDate;
+            $startTime = $event->startTime ;
+            $endTime = $event->endTime ;
+
+            session()->flash('alert', 'この時間帯は既に他の予約が存在します。');
+
+            return view('manager.events.edit',
+            \compact('event','eventDate','startTime','endTime'));
+        }
+
+        // 開始時間(日付作成処理はEventService::joinDateAndTime内)
+        $startDate = EventService::joinDateAndTime($request['event_date'],$request['start_time']);
+        // 終了時間(日付作成処理はEventService::joinDateAndTime内)
+        $endDate = EventService::joinDateAndTime($request['event_date'],$request['end_time']);
+
+        // イベントIDを取得
+        $event = Event::findorFail($event->id);
+        // 取得したイベントIDから情報を取得
+        $event->name = $request['event_name'];
+        $event->information = $request['information'];
+        $event->start_date = $startDate;
+        $event->end_date = $endDate;
+        $event->max_people = $request['max_people'];
+        $event->is_visible = $request['is_visible'];
+        // 編集したイベント情報を保存
+        $event->save();
+
+         // 登録完了のflash-message
+        session()->flash('status', '更新完了しました');
+        // event.indexへリダイレクト
+        return to_route('events.index');
     }
 
     /**
