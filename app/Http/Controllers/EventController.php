@@ -133,16 +133,27 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
         // 重複イベントをカウントする
-        $check = EventService::countEventDuplication(
-            $request['event_date'],$request['start_time'],$request['end_time']);
+        $check = EventService::checkEventDuplicationExceptOwn(
+            // イベント自身のIDも渡す
+            $event->id,
+            $request['event_date'],
+            $request['start_time'],
+            $request['end_time']
+        );
+
+        // dd($check);
 
         // 重複の場合、アラートを出す
-        if($check > 1){
+        if($check){
             $event = Event::findorFail($event->id);
+
+            // Accessor
             $eventDate = $event->editEventDate;
             $startTime = $event->startTime ;
             $endTime = $event->endTime ;
+
             session()->flash('alert', 'この時間帯は既に他の予約が存在します。');
+
             return view('manager.events.edit',
             \compact('event','eventDate','startTime','endTime'));
         }
