@@ -54,9 +54,13 @@
                                     非表示
                                 @endif
                             </div>
+                            {{-- @if($event->eventDate >= var_dump(\Carbon\Carbon::today())) --}}
+                            {{-- debugすると型が違うのが分かるので、formatをかける --}}
+                            @if($event->eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
                             <x-jet-button class="ml-4">
                                 編集する
                             </x-jet-button>
+                            @endif
                         </div>
                     </form>
                 </div>
