@@ -24,6 +24,16 @@ class EventController extends Controller
         // 本日日付の取得
         $today = Carbon::today();
 
+        /* 予約人数の確認
+        *  SQL:SELECT `event_id`,
+        *  sum(`number_of_people`) FROM
+        *  `reservations` GROUP by `event_id` */
+        $reservedPeople = DB::table('reservations')
+        // select内でsumを使うため、クエリビルダのDB::rawで対応
+        ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+        ->groupBy('event_id');
+        dd($reservedPeople);
+
         // eventsテーブルより降順に10ずつ件取得
         $events = DB::table('events')
         ->whereDate('start_date', '>=', $today) // 本日日付以降を取得
