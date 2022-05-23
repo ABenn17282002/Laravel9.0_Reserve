@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // 事前にイベント,User情報を登録する
+        Event::factory(100)->create();
         // ダミーデータの登録
         $this->call([
             UserSeeder::class,
+            // 予約情報のSeeder作成
+            ReservationSeeder::class
         ]);
 
-        Event::factory(100)->create();
     }
 }
