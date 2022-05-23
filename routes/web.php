@@ -27,6 +27,8 @@ Route::get('/', function () {
 // manager以上の権限がアクセス可
 Route::prefix('manager')
 ->middleware('can:manager-higher')->group(function(){
+    // 過去ページはresouceの上で定義する。
+    Route::get('events/past', [EventController::class, 'past'])->name('events.past');
     // Event関連リソースの紐づけ
     Route::resource('events',EventController::class);
 });

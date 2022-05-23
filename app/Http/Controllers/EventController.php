@@ -181,6 +181,21 @@ class EventController extends Controller
         return to_route('events.index');
     }
 
+    // 過去のイベント一覧表示
+    public function past()
+    {
+        // 現在日時の取得
+        $today = Carbon::today();
+        // 開始日時を本日以前のものを降順に取得
+        $events = DB::table('events')
+        ->whereDate('start_date', '<', $today)
+        ->orderBy('start_date','desc')
+        ->paginate(10);
+
+        // 取得したイベント情報及を過去ページへ返す
+        return view('manager.events.past',\compact('events'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
