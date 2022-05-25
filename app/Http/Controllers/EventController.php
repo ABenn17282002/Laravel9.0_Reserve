@@ -33,15 +33,9 @@ class EventController extends Controller
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
         ->groupBy('event_id');
 
-        // 内部結合:合計人数がない場合データが表示されない
-        // $events = DB::table('events')
-        // ->joinSub($reservedPeople, 'reservedPeople', function($join){
-        //     $join->on('events.id','=', 'reservedPeople.event_id');
-        // })->get();
-
-        // 外部結合:合計人数がない場合、nullとして表示される
         // 今日以降を日付順に10件ずつ取得
         $events = DB::table('events')
+        // 外部結合:合計人数がない場合、nullとして表示される
         ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
             $join->on('events.id','=', 'reservedPeople.event_id');
         })
@@ -209,8 +203,17 @@ class EventController extends Controller
     {
         // 現在日時の取得
         $today = Carbon::today();
+
+        $reservedPeople = DB::table('reservations')
+        ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+        ->groupBy('event_id');
+
         // 開始日時を本日以前のものを降順に取得
         $events = DB::table('events')
+        // 外部結合
+        ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
+            $join->on('events.id','=', 'reservedPeople.event_id');
+        })
         ->whereDate('start_date', '<', $today)
         ->orderBy('start_date','desc')
         ->paginate(10);
