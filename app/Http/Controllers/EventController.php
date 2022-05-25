@@ -32,10 +32,19 @@ class EventController extends Controller
         // select内でsumを使うため、クエリビルダのDB::rawで対応
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
         ->groupBy('event_id');
-        dd($reservedPeople);
 
-        // eventsテーブルより降順に10ずつ件取得
+        // 内部結合:合計人数がない場合データが表示されない
+        // $events = DB::table('events')
+        // ->joinSub($reservedPeople, 'reservedPeople', function($join){
+        //     $join->on('events.id','=', 'reservedPeople.event_id');
+        // })->get();
+
+        // 外部結合:合計人数がない場合、nullとして表示される
+        // 今日以降を日付順に10件ずつ取得
         $events = DB::table('events')
+        ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
+            $join->on('events.id','=', 'reservedPeople.event_id');
+        })
         ->whereDate('start_date', '>=', $today) // 本日日付以降を取得
         ->orderBy('start_date', 'asc')
         ->paginate(10);
