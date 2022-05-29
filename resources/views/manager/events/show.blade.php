@@ -22,8 +22,8 @@
                         <div class="mt-4">
                             <x-jet-label for="information" value="イベント詳細" />
                             {{--  e():エスケープ
-                                　nl2br:改行を<br/>に変換
-                                　{!! !!}:改行のみエスケープしない
+                                nl2br:改行を<br/>に変換
+                                {!! !!}:改行のみエスケープしない
                             --}}
                             {!!nl2br(e($event->information))!!}
                         </div>
