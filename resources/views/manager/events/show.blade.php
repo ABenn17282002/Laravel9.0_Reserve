@@ -73,16 +73,27 @@
                 <div class="max-w-2xl py-4 mx-auto">
                     {{-- Userが空でなければ表示 --}}
                     @if(!$users->isEmpty())
-                        予約情報
-                        @foreach ($reservations as $reservation)
-                            {{-- {{ var_dump($reservation['name']) }} --}}
-                            {{-- キャンセル日が空であれば名前と最大人数を表示 --}}
-                            @if(is_null($reservation['canceled_date']))
-                                {{ $reservation['name'] }}
-                                {{ $reservation['number_of_people'] }}
-                            @endif
-                        @endforeach
-                    @endif
+                        <div class="text-center py-2">予約状況</div>
+                        <table class="table-auto w-full text-left whitespace-no-wrap">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">予約者名</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">予約人数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($reservations as $reservation)
+                                {{-- キャンセル日が空であれば名前と最大人数を表示 --}}
+                                @if(is_null($reservation['canceled_date']))
+                                <tr>
+                                    <td class="px-4 py-3">{{ $reservation['name'] }}</td>
+                                    <td class="px-4 py-3">{{ $reservation['number_of_people'] }}</td>
+                                </tr>
+                                @endif
+                                @endforeach
+                            </tbody>
+                        <table>
+                        @endif
                 </div>
             </div>
         </div>

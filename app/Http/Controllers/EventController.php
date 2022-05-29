@@ -31,6 +31,8 @@ class EventController extends Controller
         $reservedPeople = DB::table('reservations')
         // select内でsumを使うため、クエリビルダのDB::rawで対応
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+        // キャンセル分を合計から除外する
+        ->whereNull('canceled_date')
         ->groupBy('event_id');
 
         // 今日以降を日付順に10件ずつ取得
@@ -222,6 +224,8 @@ class EventController extends Controller
 
         $reservedPeople = DB::table('reservations')
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
+        // キャンセル分を合計から除外する
+        ->whereNull('canceled_date')
         ->groupBy('event_id');
 
         // 開始日時を本日以前のものを降順に取得
