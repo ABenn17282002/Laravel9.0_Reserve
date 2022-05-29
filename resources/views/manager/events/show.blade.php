@@ -73,7 +73,15 @@
                 <div class="max-w-2xl py-4 mx-auto">
                     {{-- Userが空でなければ表示 --}}
                     @if(!$users->isEmpty())
-                    予約情報
+                        予約情報
+                        @foreach ($reservations as $reservation)
+                            {{-- {{ var_dump($reservation['name']) }} --}}
+                            {{-- キャンセル日が空であれば名前と最大人数を表示 --}}
+                            @if(is_null($reservation['canceled_date']))
+                                {{ $reservation['name'] }}
+                                {{ $reservation['number_of_people'] }}
+                            @endif
+                        @endforeach
                     @endif
                 </div>
             </div>
