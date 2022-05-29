@@ -109,15 +109,18 @@ class EventController extends Controller
         // イベントモデルを取得
         $event = Event::findorFail($event->id);
 
+        // DBから取得したリレーション情報
+        $users = $event->users;
+
+        // dd($event, $users);
+
         // アクセサで日付、開始時間、終了時間を取得
         $eventDate = $event->eventDate;
         $startTime = $event->startTime ;
         $endTime = $event->endTime ;
 
-        // dd($eventDate,$startTime,$endTime);
-
-        // 取得したイベント情報及び開始日時、終了時間を詳細ページへ返す
-        return view('manager.events.show',\compact('event','eventDate','startTime','endTime'));
+        // 取得したイベント・User情報及び開始日時、終了時間を詳細ページへ返す
+        return view('manager.events.show',\compact('event','users','eventDate','startTime','endTime'));
     }
 
     /**
