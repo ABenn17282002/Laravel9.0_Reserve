@@ -105,14 +105,26 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        // dd($event);
         // イベントモデルを取得
         $event = Event::findorFail($event->id);
-
         // DBから取得したリレーション情報
         $users = $event->users;
 
-        // dd($event, $users);
+        // 連想配列を作成
+        $reservations =[];
+
+        // 1人ずつ名前と最大人数、キャンセル日時を取得し、連想配列へ追加
+        foreach($users as $user)
+        {
+            $reservedinfo =[
+                'name'=>$user->name,
+                'number_of_people'=>$user->pivot->number_of_people,
+                'canceled_date'=>$user->pivot->canceled_date,
+            ];
+            \array_push($reservations,$reservedinfo);
+        }
+
+        // dd($reservations);
 
         // アクセサで日付、開始時間、終了時間を取得
         $eventDate = $event->eventDate;
@@ -120,7 +132,8 @@ class EventController extends Controller
         $endTime = $event->endTime ;
 
         // 取得したイベント・User情報及び開始日時、終了時間を詳細ページへ返す
-        return view('manager.events.show',\compact('event','users','eventDate','startTime','endTime'));
+        return view('manager.events.show',\compact('event','users','reservations',
+        'eventDate','startTime','endTime'));
     }
 
     /**
