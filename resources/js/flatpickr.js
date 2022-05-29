@@ -10,6 +10,13 @@ flatpickr("#event_date", {
     maxDate: new Date().fp_incr(30)  //今日から何日選択可能か
 });
 
+// top画面のカレンダー表示
+flatpickr("#calendar", {
+    "locale":Japanese, // 日本
+    minDate:"today",   // 最少日時(今日)
+    maxDate: new Date().fp_incr(30)  //今日から何日選択可能か
+});
+
 // 開始時間と終了時間の設定
 const setting = {
     "locale": Japanese, // 日本語
@@ -19,6 +26,7 @@ const setting = {
     time_24hr: true,    // 24時間表示
     minTime: "10:00",   // <開始>10:00
     maxTime: "20:00",   // <終了>20:00
+    minuteIncrement:30  // 30分単位
   }
 
 // 開始時間

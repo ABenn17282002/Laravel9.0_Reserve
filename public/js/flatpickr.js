@@ -2892,6 +2892,15 @@ __webpack_require__.r(__webpack_exports__);
   // 最少日時(今日)
   maxDate: new Date().fp_incr(30) //今日から何日選択可能か
 
+}); // top画面のカレンダー表示
+
+(0,flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"])("#calendar", {
+  "locale": flatpickr_dist_l10n_ja_js__WEBPACK_IMPORTED_MODULE_1__.Japanese,
+  // 日本
+  minDate: "today",
+  // 最少日時(今日)
+  maxDate: new Date().fp_incr(30) //今日から何日選択可能か
+
 }); // 開始時間と終了時間の設定
 
 var setting = {
@@ -2907,7 +2916,9 @@ var setting = {
   // 24時間表示
   minTime: "10:00",
   // <開始>10:00
-  maxTime: "20:00" // <終了>20:00
+  maxTime: "20:00",
+  // <終了>20:00
+  minuteIncrement: 30 // 30分単位
 
 }; // 開始時間
 
