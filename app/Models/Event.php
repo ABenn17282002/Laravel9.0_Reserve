@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 // 日付取得モジュール
 use Carbon\Carbon;
+// Userモデル
+use App\Models\User;
 
 class Event extends Model
 {
@@ -23,7 +25,7 @@ class Event extends Model
         'is_visible'    // 表示・非表示
     ];
 
-    /* アクセサ(DB取得時にデータを加工する機能)　*/
+    /* アクセサ(DB取得時にデータを加工する機能)*/
     // 取得した開始日時から日付情報のみを取得
     protected function eventDate():Attribute
     {
@@ -46,5 +48,13 @@ class Event extends Model
     protected function endTime():Attribute
     {
         return new Attribute(get:fn()=>Carbon::parse($this->end_date)->format('H時i分'));
+    }
+
+    public function users()
+    {
+        // 多対多のリレーション、第2引数:中間テーブル名を指定
+        return $this->belongsToMany(User::class, 'reservations')
+        // withPivot:中間テーブルで取得したい情報を指定する
+        ->withPivot('id', 'number_of_people', 'canceled_date');
     }
 }

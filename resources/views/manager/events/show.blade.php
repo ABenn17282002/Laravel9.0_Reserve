@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="pt-4 pb-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 {{-- イベント登録フォーム --}}
@@ -63,6 +63,18 @@
                             @endif
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="max-w-2xl py-4 mx-auto">
+                    {{-- Userが空でなければ表示 --}}
+                    @if(!$users->isEmpty())
+                    予約情報
+                    @endif
                 </div>
             </div>
         </div>
