@@ -11,4 +11,7 @@
             {{ $currentWeek[$day] }}
         @endfor
     </div>
+    @foreach ($events as $event)
+        {{ $event->start_date }}<br>
+    @endforeach
 </div>

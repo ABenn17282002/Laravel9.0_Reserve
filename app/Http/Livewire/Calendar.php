@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+// 日付モジュール
 use Carbon\Carbon;
+// EventServiceの使用
+use App\Services\EventService;
 
 class Calendar extends Component
 {
@@ -11,13 +14,24 @@ class Calendar extends Component
     public $currentDate;
     public $day;
     public $currentWeek;
+    // 追加
+    public $sevenDaysLater;
+    public $events;
 
     public function mount()
     {
         // 現在日時の取得
         $this->currentDate = Carbon::today();
+        // 1週間後の日時取得
+        $this->sevenDaysLater = $this->currentDate->addDays(7);
         // 今週を取得する連想配列
         $this->currentWeek =[];
+
+        // イベントの日時を取得
+        $this->events = EventService::getWeekEvents(
+            $this->currentDate->format('Y-m-d'),
+            $this->sevenDaysLater->format('Y-m-d')
+        );
 
         for($i =0; $i<7; $i++)
         {   // 現在日時から7日分日付を作成
@@ -35,6 +49,12 @@ class Calendar extends Component
         // 現在日時の文字列化
         $this->currentDate = $date;
         $this->currentWeek =[];
+        $this->sevenDaysLatter = Carbon::parse($this->currentDate)->addDays(7);
+
+        $this->events = EventService::getWeekEvents(
+            $this->currentDate,
+            $this->sevenDaysLater->format('Y-m-d')
+        );
 
         for($i=0; $i < 7; $i++)
         {

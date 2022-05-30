@@ -2897,8 +2897,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"])("#calendar", {
   "locale": flatpickr_dist_l10n_ja_js__WEBPACK_IMPORTED_MODULE_1__.Japanese,
   // 日本
-  minDate: "today",
-  // 最少日時(今日)
+  // minDate:"today",   // 最少日時(今日) <-一旦コメントアウト
   maxDate: new Date().fp_incr(30) //今日から何日選択可能か
 
 }); // 開始時間と終了時間の設定
