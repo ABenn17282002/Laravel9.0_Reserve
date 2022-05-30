@@ -69,19 +69,17 @@ class EventService
     // 指定期間のイベント取得用関数
     public static function getWeekEvents($startDate,$endDate)
     {
+        // キャンセル分を除いた合計を計算する
         $reservedPeople = DB::table('reservations')
         ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
-        // キャンセル分を合計から除外する
         ->whereNull('canceled_date')
         ->groupBy('event_id');
 
         // 開始日時を本日以前のものを降順に取得
         return DB::table('events')
-        // 外部結合
         ->leftJoinSub($reservedPeople, 'reservedPeople', function($join){
             $join->on('events.id','=', 'reservedPeople.event_id');
         })
-        // 開始日時～終了日時までのものを取得
         ->whereBetween('start_date',[$startDate,$endDate])
         ->orderBy('start_date','desc')
         ->get();
