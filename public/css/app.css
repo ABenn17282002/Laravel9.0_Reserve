@@ -1077,6 +1077,9 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .block {
   display: block;
 }
@@ -1172,6 +1175,9 @@ select {
 }
 .w-40 {
   width: 10rem;
+}
+.w-32 {
+  width: 8rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1398,6 +1404,14 @@ select {
 .border-gray-400 {
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+.border-red-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+}
+.border-green-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(74 222 128 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -2534,6 +2548,10 @@ span.flatpickr-weekday {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
+}
+/*  追加CSS */
+.event-calendar{
+    width: 1000px;
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;

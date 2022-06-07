@@ -4,3 +4,9 @@
 
 /* flatpicker用CSS */
 @import 'flatpickr/dist/flatpickr.css';
+
+
+/*  追加CSS */
+.event-calendar{
+    width: 1000px;
+}
