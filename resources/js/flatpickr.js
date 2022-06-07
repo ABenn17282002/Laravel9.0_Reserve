@@ -13,7 +13,7 @@ flatpickr("#event_date", {
 // top画面のカレンダー表示
 flatpickr("#calendar", {
     "locale":Japanese, // 日本
-    minDate:"today",   // 最少日時(今日)
+    // minDate:"today",   // 最少日時(今日) <-一旦コメントアウト
     maxDate: new Date().fp_incr(30)  //今日から何日選択可能か
 });
 
