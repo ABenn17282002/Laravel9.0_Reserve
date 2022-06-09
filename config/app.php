@@ -197,6 +197,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // エイリアスの設定
+        'Constant' => App\Constants\EventConst::class,
     ])->toArray(),
 
 ];
