@@ -63,19 +63,20 @@ class Calendar extends Component
         // 現在日時の文字列化
         $this->currentDate = $date;
         $this->currentWeek =[];
-        $this->sevenDaysLatter = CarbonImmutable::parse($this->currentDate)->addDays(7);
+        $this->sevenDaysLater = CarbonImmutable::parse($this->currentDate)->addDays(7);
 
         $this->events = EventService::getWeekEvents(
             $this->currentDate,
-            $this->sevenDaysLater->format('Y-m-d')
+            $this->sevenDaysLater->format('Y-m-d'),
         );
 
         for($i=0; $i < 7; $i++)
         {
             // parseでCarbonインスタンスに変換後、日付変換
             $this->day = CarbonImmutable::parse($this->currentDate)->addDays($i)->format('m月d日');
-            $this->checkDay = CarbonImmutable::today()->addDays($i)->format('Y-m-d');
-            $this->dayOfWeek = CarbonImmutable::today()->addDays($i)->dayName;
+            // 修正 CarbonImmutable::today() ⇒ CarbonImmutable::parse($this->currentDate)
+            $this->checkDay = CarbonImmutable::parse($this->currentDate)->addDays($i)->format('Y-m-d');
+            $this->dayOfWeek = CarbonImmutable::parse($this->currentDate)->addDays($i)->dayName;
 
             // 連想配列に追加
             \array_push($this->currentWeek, [ // 連想配列に変更

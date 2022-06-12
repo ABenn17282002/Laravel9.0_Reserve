@@ -6,7 +6,8 @@ namespace App\Services;
 // DBファザード
 use Illuminate\Support\Facades\DB;
 // 日付モジュール
-use Carbon\Carbon;
+// use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class EventService
 {
@@ -62,8 +63,8 @@ class EventService
     */
     public static function joinDateAndTime($date,$time)
     {
-        $join = $date. "" . $time;
-        return Carbon::createFromFormat('Y-m-d H:i', $join);
+        $join = $date." ".$time;
+        return CarbonImmutable::createFromFormat('Y-m-d H:i', $join);
     }
 
     // 指定期間のイベント取得用関数
@@ -81,7 +82,7 @@ class EventService
             $join->on('events.id','=', 'reservedPeople.event_id');
         })
         ->whereBetween('start_date',[$startDate,$endDate])
-        ->orderBy('start_date','desc')
+        ->orderBy('start_date','asc')
         ->get();
     }
 }

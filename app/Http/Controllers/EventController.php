@@ -108,7 +108,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         // イベントモデルを取得
-        $event = Event::findorFail($event->id);
+        $event = Event::findOrFail($event->id);
         // DBから取得したリレーション情報
         $users = $event->users;
 
@@ -180,7 +180,7 @@ class EventController extends Controller
 
         // 重複の場合、アラートを出す
         if($check){
-            $event = Event::findorFail($event->id);
+            $event = Event::findOrFail($event->id);
 
             // Accessor
             $eventDate = $event->editEventDate;
@@ -199,7 +199,7 @@ class EventController extends Controller
         $endDate = EventService::joinDateAndTime($request['event_date'],$request['end_time']);
 
         // イベントIDを取得
-        $event = Event::findorFail($event->id);
+        $event = Event::findOrFail($event->id);
         // 取得したイベントIDから情報を取得
         $event->name = $request['event_name'];
         $event->information = $request['information'];

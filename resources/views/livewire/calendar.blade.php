@@ -16,8 +16,16 @@
             <div class="py-1 px-2 border border-gray-200 text-center">{{ $currentWeek[$i]['dayOfWeek'] }}</div>
             @for($j = 0; $j < 21; $j++)
             {{-- 時間 --}}
-                @if ($events->isNotEmpty())
-                    <div class="py-1 px-2 h-8 border border-gray-200">{{ \Constant::EVENT_TIME[$j] }}</div>
+            @if ($events->isNotEmpty())
+                    {{-- イベント開始時間(DB) = 対象時間(入力した日付+時間) --}}
+                    @if(!is_null($events->firstWhere('start_date',$currentWeek[$i]['checkDay']. " ".\Constant::EVENT_TIME[$j] )))
+                    <div class="py-1 px-2 h-8 border text-xs">
+                        {{--  イベント名を追記 --}}
+                        {{ $events->firstWhere('start_date',$currentWeek[$i]['checkDay']." ".\Constant::EVENT_TIME[$j])->name }}
+                    </div>
+                    @else
+                        <div class="py-1 px-2 h-8 border border-gray-200"></div>
+                    @endif
                 @else
                     <div class="py-1 px-2 h-8 border border-gray-200"></div>
                 @endif
@@ -26,3 +34,4 @@
         @endfor
     </div>
 </div>
+
