@@ -7,6 +7,7 @@ use App\Http\Controllers\LivewireTestController;
 use App\Http\Controllers\AlpineTestController;
 // EventContrller
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,25 +35,26 @@ Route::prefix('manager')
 });
 
 // user以上権限がアクセス可
-Route::middleware('can:user-higher')->group(function(){
-    Route::get('index', function () {
-        dd('user');
-    });
+Route::middleware('can:user-higher')
+->group(function(){
+    Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
 });
 
 // alpine表示用ルートの設定
 Route::get('alpine-test/index',
 [AlpineTestController::class, 'index']);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// API認証を使用しない
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
+
 
 // Livewire用ルートの指定
 Route::controller(LivewireTestController::class)
