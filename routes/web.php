@@ -37,7 +37,10 @@ Route::prefix('manager')
 // user以上権限がアクセス可
 Route::middleware('can:user-higher')
 ->group(function(){
+    // dashboard
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
+    // イベント詳細
+    Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
 });
 
 // alpine表示用ルートの設定
