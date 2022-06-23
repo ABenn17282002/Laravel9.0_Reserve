@@ -22,15 +22,20 @@ class ReservationSeeder extends Seeder
             'number_of_people' => 5,
             'canceled_date' => null
         ],[
-            'user_id' => 2,
-            'event_id' => 1,
+            'user_id' => 1,
+            'event_id' => 4,
             'number_of_people' => 3,
             'canceled_date' => null
         ],[
             'user_id' => 1,
             'event_id' => 2,
             'number_of_people' => 2,
-            'canceled_date' => '2022-03-01 00:00:00'
+            'canceled_date' => '2022-06-03 00:00:00'
+        ],[
+            'user_id' => 1,
+            'event_id' => 5,
+            'number_of_people' => 6,
+            'canceled_date' => null
         ]
             ]);
     }
