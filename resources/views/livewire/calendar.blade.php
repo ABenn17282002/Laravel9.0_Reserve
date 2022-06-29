@@ -31,9 +31,11 @@
                                 $eventInfo = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . " " . \Constant::EVENT_TIME[$j] );
                                 // 開始時間 - 終了時間の差分を計算
                                 $eventPeriod = \Carbon\Carbon::parse($eventInfo->start_date)->diffInMinutes($eventInfo->end_date) / 30 - 1;
+                                // 予約可能人数 = 定員 - 予約済み人数
                                 $resevablePeople = $eventInfo->max_people - $eventInfo->number_of_people;
                                 // dd($eventInfo);
                             @endphp
+                            {{-- 予約可能な場合:blue,予約可能人数表示 --}}
                             @if($resevablePeople > 0)
                                 <a href="{{ route('events.detail', ['id' => $eventId ]) }}">
                                     {{--  イベント名の記載 --}}
@@ -49,6 +51,7 @@
                                     {{-- 追加した分$j(縦列のマス目)も増やす --}}
                                     @php $j += $eventPeriod @endphp
                                 @endif
+                            {{-- 満員時:Gray --}}
                             @else
                                 <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-gray-200">
                                     {{ $eventName }}
