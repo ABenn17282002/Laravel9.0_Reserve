@@ -41,7 +41,10 @@ Route::middleware('can:user-higher')
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
     // イベント詳細
     Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
+    // イベント予約
+    Route::post('/',[ReservationController::class,'reserve'])->name('events.reserve');
 });
+
 
 // alpine表示用ルートの設定
 Route::get('alpine-test/index',

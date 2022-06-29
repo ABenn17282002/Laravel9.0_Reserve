@@ -31,20 +31,38 @@
                                 $eventInfo = $events->firstWhere('start_date', $currentWeek[$i]['checkDay'] . " " . \Constant::EVENT_TIME[$j] );
                                 // 開始時間 - 終了時間の差分を計算
                                 $eventPeriod = \Carbon\Carbon::parse($eventInfo->start_date)->diffInMinutes($eventInfo->end_date) / 30 - 1;
+                                // 予約可能人数 = 定員 - 予約済み人数
+                                $resevablePeople = $eventInfo->max_people - $eventInfo->number_of_people;
+                                // dd($eventInfo);
                             @endphp
-                            <a href="{{ route('events.detail', ['id' => $eventId ]) }}">
-                            {{--  イベント名の記載 --}}
-                                <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
+                            {{-- 予約可能な場合:blue,予約可能人数表示 --}}
+                            @if($resevablePeople > 0)
+                                <a href="{{ route('events.detail', ['id' => $eventId ]) }}">
+                                    {{--  イベント名の記載 --}}
+                                    <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-blue-100">
+                                        {{ $eventName }} <br>{{ $resevablePeople  }}人
+                                    </div>
+                                </a>
+                                {{-- イベント時間が0以上なら色を塗って表示 --}}
+                                @if( $eventPeriod > 0 )
+                                    @for($k = 0; $k < $eventPeriod ; $k++)
+                                        <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
+                                    @endfor
+                                    {{-- 追加した分$j(縦列のマス目)も増やす --}}
+                                    @php $j += $eventPeriod @endphp
+                                @endif
+                            {{-- 満員時:Gray --}}
+                            @else
+                                <div class="py-1 px-2 h-8 border border-gray-200 text-xs bg-gray-200">
                                     {{ $eventName }}
                                 </div>
-                            </a>
-                            {{-- イベント時間が0以上なら色を塗って表示 --}}
-                            @if( $eventPeriod > 0 )
-                                @for($k = 0; $k < $eventPeriod ; $k++)
-                                    <div class="py-1 px-2 h-8 border border-gray-200 bg-blue-100"></div>
-                                @endfor
-                                {{-- 追加した分$j(縦列のマス目)も増やす --}}
-                                @php $j += $eventPeriod @endphp
+                                @if( $eventPeriod > 0 )
+                                    @for($k = 0; $k < $eventPeriod ; $k++)
+                                        <div class="py-1 px-2 h-8 border border-gray-200 bg-gray-200"></div>
+                                    @endfor
+                                    {{-- 追加した分$j(縦列のマス目)も増やす --}}
+                                    @php $j += $eventPeriod @endphp
+                                @endif
                             @endif
                         @else
                             <div class="py-1 px-2 h-8 border border-gray-200"></div>

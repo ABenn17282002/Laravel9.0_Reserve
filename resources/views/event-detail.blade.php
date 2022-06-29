@@ -14,7 +14,8 @@
                     {{-- flassmessageの表示 --}}
                     <x-flash-message/>
 
-                    <form method="get" action="{{ route('events.edit',['event'=> $event->id]) }}">
+                    <form method="post" action="{{ route('events.reserve', ['id' => $event->id ]) }}">
+                        @csrf
                             <div>
                                 <x-jet-label for="event_name" value="イベント名" />
                                 {{ $event->name }}
@@ -47,14 +48,15 @@
                                 {{ $event->max_people }}
                             </div>
                             <div class="mt-4">
-                                <x-jet-label for="resevablePeople" value="予約人数" />
-                                <select name="resevablePeople">
+                                <x-jet-label for="reserved_people" value="予約人数" />
+                                <select name="reserved_people">
                                     {{-- for文で予約可能人数を取得 --}}
                                     @for($i = 1; $i<= $resevablePeople; $i++ )
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>
+                            <input type="hidden" name="id" value="{{$event->id}}">
                             <x-jet-button class="ml-4">
                                 予約する
                             </x-jet-button>
