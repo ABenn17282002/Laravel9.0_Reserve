@@ -21,5 +21,7 @@ class MyPageController extends Controller
         $pastEvents = MyPageService::reservedEvent($events,'past');
 
         dd($events,$fromTodayEvents,$pastEvents);
+
+        return \view('mypage/index',\compact('fromTodayEvents','pastEvents'));
     }
 }
