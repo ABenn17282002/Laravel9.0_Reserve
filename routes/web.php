@@ -8,6 +8,8 @@ use App\Http\Controllers\AlpineTestController;
 // EventContrller
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReservationController;
+// MyPageController
+use App\Http\Controllers\MyPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +41,14 @@ Route::middleware('can:user-higher')
 ->group(function(){
     // dashboard
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
+    // MyPage.index
+    Route::get('/mypage',[MyPageController::class,'index'])->name('mypage.index');
+    // MyPage.show
+    Route::get('/mypage/{id}',[MyPageController::class,'show'])->name('mypage.show');
     // イベント詳細
     Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
     // イベント予約
-    Route::post('/',[ReservationController::class,'reserve'])->name('events.reserve');
+    Route::post('/{id}',[ReservationController::class,'reserve'])->name('events.reserve');
 });
 
 
