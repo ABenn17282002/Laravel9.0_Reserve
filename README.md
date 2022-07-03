@@ -41,12 +41,12 @@ git clone -b ブランチ名 https://github.com/ABenn17282002/Laravel9.0_Reserve
 
 ### 2. 直接 DownLoad する方法
 
-(1) 下記の URL を開きます。
-https://github.com/ABenn17282002/Laravel9.0_Reserve
-(2) 画面左上の「main」部分より branch を選択します
-(3) 画面右上にある「Code」ボタンをクリックします
-(4) ポップアップしたウィンドウの Download ZIP をクリックすると zip ファイルとしてダウンロードできます。
-(5) PC 側で zip ファイルを展開します
+(1) 下記の URL を開きます。<br>
+https://github.com/ABenn17282002/Laravel9.0_Reserve<br>
+(2) 画面左上の「main」部分より branch を選択します<br>
+(3) 画面右上にある「Code」ボタンをクリックします<br>
+(4) ポップアップしたウィンドウの Download ZIP をクリックすると zip ファイルとしてダウンロードできます。<br>
+(5) PC 側で zip ファイルを展開します<br>
 
 ## Install 方法
 
@@ -76,7 +76,7 @@ sail docker でインストールしたフォルダーにペースト
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1 → mysqlに変更
 DB_PORT=3306
-DB_DATABASE=shoppingcart
+DB_DATABASE=reserve_app
 DB_USERNAME=root  → 任意のUser名に変更
 DB_PASSWORD=      → 任意PW設定
 ```
