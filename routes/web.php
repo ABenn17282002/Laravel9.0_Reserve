@@ -43,6 +43,8 @@ Route::middleware('can:user-higher')
     Route::get('/dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
     // MyPage.index
     Route::get('/mypage',[MyPageController::class,'index'])->name('mypage.index');
+    // MyPage.show
+    Route::get('/mypage/{id}',[MyPageController::class,'show'])->name('mypage.show');
     // イベント詳細
     Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
     // イベント予約

@@ -20,7 +20,7 @@ class MyPageController extends Controller
         // 過去の予約
         $pastEvents = MyPageService::reservedEvent($events,'past');
 
-        dd($events,$fromTodayEvents,$pastEvents);
+        // dd($events,$fromTodayEvents,$pastEvents);
 
         return \view('mypage/index',\compact('fromTodayEvents','pastEvents'));
     }
