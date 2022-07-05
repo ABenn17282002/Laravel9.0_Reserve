@@ -45,6 +45,8 @@ Route::middleware('can:user-higher')
     Route::get('/mypage',[MyPageController::class,'index'])->name('mypage.index');
     // MyPage.show
     Route::get('/mypage/{id}',[MyPageController::class,'show'])->name('mypage.show');
+    // MyPage.cancel
+    Route::post('/mypage/{id}',[MyPageController::class,'cancel'])->name('mypage.cancel');
     // イベント詳細
     Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
     // イベント予約
