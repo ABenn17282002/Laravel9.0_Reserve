@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // User
 use App\Models\User;
+// Event
+use App\Models\Event;
+// REservation
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 use App\Services\MyPageService;
 
@@ -23,5 +27,24 @@ class MyPageController extends Controller
         // dd($events,$fromTodayEvents,$pastEvents);
 
         return \view('mypage/index',\compact('fromTodayEvents','pastEvents'));
+    }
+
+    public function show($id)
+    {
+        // Eventidを取得
+        $event = Event::findOrFail($id);
+        // 予約取得(認証済IDかつEventID)
+        $reservation = Reservation::where('user_id', '=', Auth::id())
+        ->where('event_id', '=', $id)
+        ->first();
+
+        // dd($reservation);
+
+        return \view('mypage/show',\compact('event','reservation'));
+    }
+
+    public function cancel($id)
+    {
+        dd($id);
     }
 }
