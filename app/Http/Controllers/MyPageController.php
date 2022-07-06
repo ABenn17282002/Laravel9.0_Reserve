@@ -37,6 +37,8 @@ class MyPageController extends Controller
         // 予約取得(認証済IDかつEventID)
         $reservation = Reservation::where('user_id', '=', Auth::id())
         ->where('event_id', '=', $id)
+        // creatd_atが最新のもの
+        ->latest()
         ->first();
 
         // dd($reservation);
@@ -49,6 +51,8 @@ class MyPageController extends Controller
         // useridとeventidが合致するもの
         $reservation = Reservation::where('user_id','=', Auth::id())
         ->where('event_id', '=', $id)
+        // creatd_atが最新のもの
+        ->latest()
         ->first();
 
         // キャンセル日を記載し、保存処理
