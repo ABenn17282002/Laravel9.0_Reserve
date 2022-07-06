@@ -33,6 +33,12 @@ class ReservationController extends Controller
         ->having('event_id',$event->id)
         ->first();
 
+        $isReserved = Reservation::where('user_id', '=', Auth::id())
+        ->where('event_id', '=', $id)
+        ->where('canceled_date', '=', null)
+        ->latest()
+        ->first();
+
         // 予約者がnullでなければ
         if(!is_null($reservedPeople))
         {
@@ -45,7 +51,7 @@ class ReservationController extends Controller
         }
 
         // eventIDと予約可能人数を詳細ページに渡す
-        return \view('event-detail',\compact('event','resevablePeople'));
+        return \view('event-detail',\compact('event','resevablePeople','isReserved'));
     }
 
     public function reserve(Request $request)
