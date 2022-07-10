@@ -12,19 +12,19 @@
                 <div class="max-w-2xl py-4 mx-auto">
                     <x-jet-validation-errors class="mb-4" />
                     {{-- flassmessageの表示 --}}
-                    <x-flash-message/>
+                    <x-flash-message />
 
                     <form method="post" action="{{ route('events.reserve', ['id' => $event->id ]) }}">
                         @csrf
-                            <div>
-                                <x-jet-label for="event_name" value="イベント名" />
-                                {{ $event->name }}
-                            </div>
+                        <div>
+                            <x-jet-label for="event_name" value="イベント名" />
+                            {{ $event->name }}
+                        </div>
                         <div class="mt-4">
                             <x-jet-label for="information" value="イベント詳細" />
-                            {{--  e():エスケープ
-                                nl2br:改行を<br/>に変換
-                                {!! !!}:改行のみエスケープしない
+                            {{-- e():エスケープ
+                            nl2br:改行を<br />に変換
+                            {!! !!}:改行のみエスケープしない
                             --}}
                             {!!nl2br(e($event->information))!!}
                         </div>
@@ -51,15 +51,18 @@
                                 <x-jet-label for="reserved_people" value="予約人数" />
                                 <select name="reserved_people">
                                     {{-- for文で予約可能人数を取得 --}}
-                                    @for($i = 1; $i<= $resevablePeople; $i++ )
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
+                                    @for($i = 1; $i<= $resevablePeople; $i++ ) <option value="{{$i}}">{{$i}}</option>
+                                        @endfor
                                 </select>
                             </div>
+                            @if($isReserved===null)
                             <input type="hidden" name="id" value="{{$event->id}}">
                             <x-jet-button class="ml-4">
                                 予約する
                             </x-jet-button>
+                            @else
+                            <span class="text-xs">このイベントは既に予約済みです。</span>
+                            @endif
                         </div>
                     </form>
                 </div>
