@@ -7,7 +7,7 @@
 
     <div class="py-4">
         {{-- 追加のCSSを記載 ※要:npm run watch --}}
-        <div class="event-calendar border border-red-400 mx-auto sm:px-6 lg:px-8">
+        <div class="event-calendar mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @livewire('calendar')
             </div>
