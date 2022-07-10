@@ -48,11 +48,13 @@ Route::middleware('can:user-higher')
     // MyPage.cancel
     Route::post('/mypage/{id}',[MyPageController::class,'cancel'])->name('mypage.cancel');
     // イベント詳細
-    Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
+    // Route::get('/{id}',[ReservationController::class,'detail'])->name('events.detail');
     // イベント予約
     Route::post('/{id}',[ReservationController::class,'reserve'])->name('events.reserve');
 });
 
+// 未ログイン時は、Loginフォームへ移動、Login時はイベント詳細画面
+Route::middleware('auth')->get('/{id}', [ReservationController::class, 'detail'])->name('events.detail');
 
 // alpine表示用ルートの設定
 Route::get('alpine-test/index',
